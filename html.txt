@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>HTML + CSS</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>MemoPad</h1>
+    <input id="title" placeholder="タイトル" />
+    <textarea id="body"></textarea>
+    <button id="save">保存</button>
+    <button id="clear">消去</button>
+    <ul id="list"></ul>
+
+    <script>
+      "use strict";
+
+      const titleEl = document.querySelector("#title");
+      const bodyEl = document.querySelector("#body");
+      const listEl = document.querySelector("#list");
+
+      // 保存されているメモを読み出す（配列の形で扱う）
+      let memos = JSON.parse(localStorage.getItem("memos") ?? "[]");
+
+      function show() {
+        listEl.innerHTML = memos
+          .map(
+            (m) =>
+              `<li><strong>${m.title}</strong>（${m.date}）<br>${m.body}<br></li>`
+          )
+          .join("");
+      }
+
+      document.querySelector("#save").addEventListener("click", function () {
+        memos.push({
+          title: titleEl.value,
+          body: bodyEl.value,
+          date: new Date().toLocaleString("ja-JP"), // 日時は自動で記録
+        });
+        localStorage.setItem("memos", JSON.stringify(memos));
+        titleEl.value = "";
+        bodyEl.value = "";
+        show();
+      });
+
+      document.querySelector("#clear").addEventListener("click", function () {
+        localStorage.removeItem("memos");
+        memos = [];
+        show();
+      });
+
+      show(); // ページを開いたときに一覧を表示
+    </script>
+  </body>
+</html>
