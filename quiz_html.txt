@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>HTML + CSS</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="progress"></div>
+    <h2 id="question"></h2>
+    <div id="choices"></div>
+    <button id="next">回答する</button>
+    <p id="feedback"></p>
+
+    <script>
+      "use strict";
+
+      const quizData = [
+        {
+          question:
+            "通るときには閉まって、通らないときには開いているものは何？",
+          choices: ["踏み切り", "洗濯機", "冷蔵庫"],
+          answer: 0, // choices[0] が正解 ＝ 0から数える
+        },
+        {
+          question: "話すことがとても好きな道具は何？",
+          choices: ["スプーン", "シャベル", "しゃもじ"],
+          answer: 1,
+        },
+        {
+          question: "世界の真ん中にいる虫は何？",
+          choices: ["てんとう虫", "カマキリ", "蚊"],
+          answer: 2,
+        },
+      ];
+
+      const progressEl = document.querySelector("#progress");
+      const questionEl = document.querySelector("#question");
+      const choicesEl = document.querySelector("#choices");
+      const feedbackEl = document.querySelector("#feedback");
+      const nextBtn = document.querySelector("#next");
+
+      let count = 0; // 今何問目か（0から数える）
+      let score = 0; // 正解数
+
+      function showQuestion() {
+        const quiz = quizData[count];
+
+        progressEl.textContent = `問題 ${count + 1} / ${quizData.length}`;
+        questionEl.textContent = quiz.question;
+        feedbackEl.textContent = "";
+
+        // 選択肢の数はデータが決める
+        choicesEl.innerHTML = quiz.choices
+          .map(function (text, i) {
+            return `<label><input type="radio" name="answer" value="${i}">${text}</label>`;
+          })
+          .join("");
+      }
+
+      nextBtn.addEventListener("click", function () {
+        const picked = document.querySelector('input[name="answer"]:checked');
+
+        if (!picked) {
+          feedbackEl.textContent = "選択肢を選んでください";
+          return;
+        }
+
+        // picked.value は文字列なので、Number() で数値に変換してから === で比較
+        if (Number(picked.value) === quizData[count].answer) {
+          feedbackEl.textContent = "正解！";
+          score++;
+        } else {
+          feedbackEl.textContent = "不正解";
+        }
+
+        count++;
+
+        if (count < quizData.length) {
+          setTimeout(showQuestion, 800); // 少し待ってから次の問題へ
+        } else {
+          setTimeout(showResult, 800); // 少し待ってから結果表示へ
+        }
+      });
+
+      function showResult() {
+        questionEl.textContent = "クイズ終了";
+        choicesEl.innerHTML = "";
+        progressEl.textContent = "";
+        nextBtn.style.display = "none"; // 回答ボタンを非表示にする
+        feedbackEl.textContent = `${quizData.length}問中 ${score}問正解`;
+      }
+
+      showQuestion();
+    </script>
+  </body>
+</html>
