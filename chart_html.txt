@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>診断チャート</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header>
@@ -55,14 +55,20 @@
         // 終端（結果）。すべて同じ形にそろえておく
         t1: {
           result: "あなたはタイプN（グラフィックデザイン志向）です",
-          image: null,
+          image: "design.png",
         },
-        t2: { result: "あなたはタイプT（映像制作志向）です", image: null },
+        t2: {
+          result: "あなたはタイプT（映像制作志向）です",
+          image: "movie.png",
+        },
         t3: {
           result: "あなたはタイプF（データサイエンティスト志向）です",
-          image: null,
+          image: "data.png",
         },
-        t4: { result: "あなたはタイプM（機械工学志向）です", image: null },
+        t4: {
+          result: "あなたはタイプM（機械工学志向）です",
+          image: "engineer.png",
+        },
       };
 
       const questionEl = document.querySelector("#question");
