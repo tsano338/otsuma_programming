@@ -1973,7 +1973,7 @@ fetchData();</code></pre>
     <p><a href="https://drive.google.com/file/d/1in-0pVjIy5Lw5e3mjK__zutfQGYsffAn/view?usp=sharing">非同期JSの解明（NotebookLMによる解説動画）</a></p>
 
     <h3>Google Books API</h3>
-    <p>Google Booksに記録されている本をキーワードで検索し、結果をJSONで返すAPIです。<a href="https://developers.google.com/books/docs/v1/using?hl=ja">公式仕様</a>　／　<a href="https://qiita.com/stella0270/items/8fdd2efcdd9db96a5c4d">わかりやすい解説</a>　／　<a href="https://codesandbox.io/p/sandbox/4jrztk" target="_blank">サンプルコード</a></p>
+    <p>Google Booksに記録されている本をキーワードで検索し、結果をJSONで返すAPIです。<a href="https://developers.google.com/books/docs/v1/using?hl=ja">公式仕様</a>　／　<a href="https://qiita.com/stella0270/items/8fdd2efcdd9db96a5c4d">わかりやすい解説</a>　／　<a href="https://tsano338.github.io/otsuma_programming/index_html_06.txt" target="_blank">サンプルコード(html)</a>　／　<a href="https://tsano338.github.io/otsuma_programming/styles_06.css" target="_blank">サンプルコード(css)</a></p>
 
     <h3>なぜ「授業用サーバ」を経由するのか</h3>
     <p>Google Books APIは、以前は<strong>APIキーなしでも呼び出せました</strong>。しかし現在は使えません。実際に試すと、こうなります。</p>
@@ -2076,7 +2076,7 @@ const BOOKS_API = "https://otsuma-llm-gateway-umber.vercel.app/api/books";
 const url = BOOKS_API + "?q=" + encodeURIComponent(word);</code></pre>
     </div>
 
-    <p>URLを直接 <code>fetch()</code> に書かず、<strong><code>const</code> で名前を付けて先頭にまとめて</strong>ください。サーバのURLが変わったとき、直す場所が1か所で済みます。第３回で <code>hands</code> を、第１０回で <code>design</code> を外に出したのと同じ考え方です。</p>
+    <p>URLを直接 <code>fetch()</code> に書かず、<strong><code>const</code> で名前を付けて先頭にまとめて</strong>ください。サーバのURLが変わったとき、直す場所が1か所で済みます。第３回で <code>hands</code> を外に出したのと同じ考え方です。</p>
 
     <p>返ってくるデータの形は<strong>Google Books本家とまったく同じ</strong>です。公式ドキュメントをそのまま読めます。</p>
 
