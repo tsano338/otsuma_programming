@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Googleシートからデータを取得</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>週間メニュー表</h1>
+    <table id="menuTable">
+      <thead>
+        <tr>
+          <th>曜日</th>
+          <th>メニュー</th>
+          <th>説明</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <!-- データはここに埋め込まれます -->
+      </tbody>
+    </table>
+    <script>
+      "use strict";
+
+      // 使用例
+      const ApiURL =
+        "https://google-sheet-read-api-746164391621.us-central1.run.app/get";
+      //const sheetId = "";
+      const sheetId = "16ReKNOFwLk6Qeq5rOfHJkh55dGbFvcRZ2jHNMgV9QfE";
+      const sheetName = "s13YYXXX";
+      const range = "A2:C8";
+
+      async function fetchData(sheetName, range, sheetId) {
+        const url = `${ApiURL}?sheetName=${encodeURIComponent(
+          sheetName
+        )}&range=${encodeURIComponent(range)}&sheetId=${encodeURIComponent(
+          sheetId
+        )}`;
+
+        const tableBody = document.querySelector("#tableBody");
+        tableBody.innerHTML = "<tr><td colspan='3'>読み込み中...</td></tr>";
+
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(
+              `サーバーエラー: ${response.status} ${response.statusText}`
+            );
+          }
+
+          const json = await response.json();
+          if (!json.data || !Array.isArray(json.data)) {
+            throw new Error("data形式が不正です（'data'配列が存在しません）");
+          }
+
+          console.log(json);
+
+          // ---- テーブルに反映 ----
+          const fragment = document.createDocumentFragment();
+          json.data.forEach((row) => {
+            const tr = document.createElement("tr");
+            row.forEach((cell) => {
+              const td = document.createElement("td");
+              td.textContent = cell ?? ""; // null/undefined対策
+              tr.appendChild(td);
+            });
+            fragment.appendChild(tr);
+          });
+
+          tableBody.innerHTML = ""; // 表示をクリア
+          tableBody.appendChild(fragment);
+        } catch (error) {
+          console.error("取得エラー:", error);
+
+          tableBody.innerHTML = `
+      <tr>
+        <td colspan="3" style="color:red">取得失敗: ${error.message}</td>
+      </tr>`;
+        }
+      }
+
+      fetchData(sheetName, range, sheetId);
+    </script>
+  </body>
+</html>
