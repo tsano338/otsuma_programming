@@ -27,7 +27,7 @@
       const ApiURL =
         "https://google-sheet-read-api-746164391621.us-central1.run.app/get";
       //const sheetId = "";
-      const sheetId = "16ReKNOFwLk6Qeq5rOfHJkh55dGbFvcRZ2jHNMgV9QfE";
+      const sheetId = "1JUbZsVRESevx-rhs420TR3OIXs2RVIuXga4Mcm-IwKs";
       const sheetName = "s13YYXXX";
       const range = "A2:C8";
 
